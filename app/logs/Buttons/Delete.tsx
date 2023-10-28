@@ -1,8 +1,10 @@
 "use client";
+import Modal from "@/app/components/modal";
 import ToastrComponent from "@/app/components/toastr";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
+import moment from "moment";
 
 interface Props {
   id: string;
@@ -10,9 +12,18 @@ interface Props {
 
 const Delete: FC<Props> = (props) => {
   const { id } = props;
-
   const router = useRouter();
   const { showToast } = ToastrComponent();
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const handleDelete = () => {
     axios
@@ -25,14 +36,17 @@ const Delete: FC<Props> = (props) => {
       })
       .finally(() => {
         router.refresh();
-        showToast("Log is successfully saved!", "success");
+        showToast("Log is successfully deleted!", "success");
+        setIsModalOpen(false);
       });
   };
+
   return (
     <>
       <button
         className="font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:text-red-500 dark:hover:text-red-700"
-        onClick={handleDelete}
+        // onClick={handleDelete}
+        onClick={openModal}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -50,6 +64,16 @@ const Delete: FC<Props> = (props) => {
           />{" "}
         </svg>
       </button>
+      <Modal
+        isOpen={isModalOpen}
+        title="Delete"
+        content="Are you sure you want to delete this log?"
+        onClose={closeModal}
+        closeBtnName="Cancel"
+        submitBtnName="Yes"
+        showSubmitBtn={true}
+        handleSubmit={handleDelete}
+      />
     </>
   );
 };
