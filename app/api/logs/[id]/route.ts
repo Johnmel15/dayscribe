@@ -9,6 +9,7 @@ interface Props {
 
 export const GET = async (res: Request, { params }: Props) => {
   try {
+    console.log(res);
     const { id } = params;
     const log = await prisma.dailyLogs.findUnique({
       where: {
@@ -58,7 +59,7 @@ export const PATCH = async (res: Request, { params }: Props) => {
   }
 };
 
-export const DELETE = async (res: NextResponse, { params }: Props) => {
+export const DELETE = async (res: Request, { params }: Props) => {
   try {
     const { id } = params;
     await prisma.dailyLogs.delete({
