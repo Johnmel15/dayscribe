@@ -1,5 +1,5 @@
 import prisma from "@/prisma/client";
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 type logProps = {
   title: string;
@@ -8,7 +8,7 @@ type logProps = {
   tagId: string;
 };
 
-export const POST = async (request: NextRequest) => {
+export async function POST(request: Request) {
   try {
     const body: logProps = await request.json();
     const { title, action, date, tagId } = body;
@@ -37,9 +37,9 @@ export const POST = async (request: NextRequest) => {
       headers: { "Content-Type": "application/json" },
     });
   }
-};
+}
 
-export const GET = async () => {
+export async function GET() {
   try {
     const items = await prisma.dailyLogs.findMany({
       include: {
@@ -55,4 +55,4 @@ export const GET = async () => {
       headers: { "Content-Type": "application/json" },
     });
   }
-};
+}

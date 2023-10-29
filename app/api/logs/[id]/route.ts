@@ -7,7 +7,7 @@ interface Props {
   };
 }
 
-export const GET = async (res: NextResponse, { params }: Props) => {
+export const GET = async (res: Request, { params }: Props) => {
   try {
     const { id } = params;
     const log = await prisma.dailyLogs.findUnique({
@@ -28,7 +28,7 @@ export const GET = async (res: NextResponse, { params }: Props) => {
   }
 };
 
-export const PATCH = async (res: NextResponse, { params }: Props) => {
+export const PATCH = async (res: Request, { params }: Props) => {
   try {
     const body = await res.json();
     const { title, action, date } = body;
