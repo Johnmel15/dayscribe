@@ -1,4 +1,4 @@
-import Form from "./Form";
+import Form from "./Form/MainForm";
 import List from "./List";
 
 export default async function Home() {

@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "./generated/client"
 }
 
 datasource db {
@@ -15,4 +16,12 @@ model DailyLogs {
   title  String
   action String
   date   DateTime
+  Tag    Tag?     @relation(fields: [tagId], references: [id])
+  tagId  String?  @db.ObjectId
+}
+
+model Tag {
+  id   String      @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  logs DailyLogs[]
 }

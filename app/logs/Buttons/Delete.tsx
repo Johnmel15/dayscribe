@@ -67,13 +67,18 @@ const Delete: FC<Props> = (props) => {
       <Modal
         isOpen={isModalOpen}
         title="Delete"
-        content="Are you sure you want to delete this log?"
         onClose={closeModal}
         closeBtnName="Cancel"
         submitBtnName="Yes"
         showSubmitBtn={true}
         handleSubmit={handleDelete}
-      />
+      >
+        <div className="mt-2">
+          <p className="text-sm text-gray-500">
+            Are you sure you want to delete this log?
+          </p>
+        </div>
+      </Modal>
     </>
   );
 };

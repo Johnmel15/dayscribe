@@ -20,7 +20,7 @@ const List = async () => {
       {data.length > 0 ? (
         <>
           {data.map((logs: any, index: number) => (
-            <Display data={logs} />
+            <Display data={logs} key={index} />
           ))}
         </>
       ) : (

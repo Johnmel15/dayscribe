@@ -1,25 +1,25 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
 interface ModalProps {
   isOpen: boolean;
   title: string;
-  content: string;
   closeBtnName?: string;
   submitBtnName?: string;
   onClose: () => void;
   handleSubmit?: () => void;
   showSubmitBtn?: boolean;
+  children?: ReactNode | string;
 }
 
 const Modal: React.FC<ModalProps> = ({
   isOpen,
   title,
-  content,
   closeBtnName = "Close",
   submitBtnName = "Submit",
   showSubmitBtn = false,
   onClose,
   handleSubmit,
+  children,
 }) => {
   const handleClose = () => {
     onClose();
@@ -60,9 +60,7 @@ const Modal: React.FC<ModalProps> = ({
                     >
                       {title}
                     </h3>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500">{content}</p>
-                    </div>
+                    {children}
                   </div>
                 </div>
               </div>

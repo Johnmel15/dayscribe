@@ -5,12 +5,13 @@ type logProps = {
   title: string;
   action: string;
   date: string;
+  tagId: string;
 };
 
 export const POST = async (request: NextResponse) => {
   try {
     const body: logProps = await request.json();
-    const { title, action, date } = body;
+    const { title, action, date, tagId } = body;
 
     if (!title || !action || !date) {
       return NextResponse.json(
@@ -24,6 +25,7 @@ export const POST = async (request: NextResponse) => {
         title: title,
         action: action,
         date: new Date(date),
+        tagId: tagId,
       },
     });
     return NextResponse.json(data);
@@ -34,7 +36,11 @@ export const POST = async (request: NextResponse) => {
 
 export const GET = async () => {
   try {
-    const items = await prisma.dailyLogs.findMany();
+    const items = await prisma.dailyLogs.findMany({
+      include: {
+        Tag: true,
+      },
+    });
     return NextResponse.json(items);
   } catch (error) {
     return NextResponse.json({ message: "POST Error", error }, { status: 500 });
