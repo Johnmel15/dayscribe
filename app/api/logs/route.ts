@@ -1,5 +1,5 @@
 import prisma from "@/prisma/client";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
 type logProps = {
   title: string;
@@ -8,15 +8,15 @@ type logProps = {
   tagId: string;
 };
 
-export const POST = async (request: NextResponse) => {
+export const POST = async (request: NextRequest) => {
   try {
     const body: logProps = await request.json();
     const { title, action, date, tagId } = body;
 
     if (!title || !action || !date) {
-      return NextResponse.json(
-        { message: "Please Fill out all required fields" },
-        { status: 500 }
+      return new NextResponse(
+        JSON.stringify({ message: "Please Fill out all required fields" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
       );
     }
 
@@ -28,9 +28,14 @@ export const POST = async (request: NextResponse) => {
         tagId: tagId,
       },
     });
-    return NextResponse.json(data);
+    return new NextResponse(JSON.stringify(data), {
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
-    return NextResponse.json({ message: "POST Error", error }, { status: 500 });
+    return new NextResponse(JSON.stringify({ message: "POST Error", error }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 };
 
@@ -41,8 +46,13 @@ export const GET = async () => {
         Tag: true,
       },
     });
-    return NextResponse.json(items);
+    return new NextResponse(JSON.stringify(items), {
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
-    return NextResponse.json({ message: "POST Error", error }, { status: 500 });
+    return new NextResponse(JSON.stringify({ message: "GET Error", error }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 };
