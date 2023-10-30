@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ToastrComponent from "@/app/components/toastr";
 import Tags from "../Select/Tags";
-import { useLogs } from "../../page";
+import { useLogs } from "@/app/state/logs";
 
 interface FormErrorProps {
   field: string;

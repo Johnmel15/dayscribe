@@ -1,5 +1,5 @@
+import { useLogs } from "@/app/state/logs";
 import React, { FC } from "react";
-import { useLogs } from "../page";
 
 interface Props {
   data: {
