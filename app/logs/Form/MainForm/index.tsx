@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ToastrComponent from "@/app/components/toastr";
 import Tags from "../Select/Tags";
+import { useLogs } from "../../page";
 
 interface FormErrorProps {
   field: string;
@@ -10,12 +11,25 @@ interface FormErrorProps {
 }
 
 const Form = () => {
-  const [title, setTitle] = useState<string>("");
-  const [ampm, setAmpm] = useState<string>("");
-  const [action, setAction] = useState<string>("");
-  const [time, setTime] = useState<string>("");
-  const [date, setDate] = useState<string>("");
-  const [tagId, setTagId] = useState<string>("0");
+  const {
+    id,
+    title,
+    action,
+    date,
+    tagId,
+    setId,
+    setTitle,
+    setAction,
+    setDate,
+    setTagId,
+  } = useLogs();
+
+  // const [title, setTitle] = useState<string>("");
+  // const [ampm, setAmpm] = useState<string>("");
+  // const [action, setAction] = useState<string>("");
+  // const [time, setTime] = useState<string>("");
+  // const [date, setDate] = useState<string>("");
+  // const [tagId, setTagId] = useState<string>("0");
   const [tagsData, setTagsData] = useState([]);
   const [formErrors, setFormErrors] = useState<FormErrorProps[]>([]);
 
@@ -72,23 +86,33 @@ const Form = () => {
       return;
     }
 
-    const data = await fetch(`/api/logs`, {
-      method: "POST",
-      body: JSON.stringify({ title, action, time, date, tagId }),
-    });
-    const res = await data.json();
-    showToast("Log is successfully saved!", "success");
-    clearFields();
-    router.refresh();
-    if (!res.ok) console.log(res.message);
+    let data: any = {};
+    let res: any = {};
+    if (id) {
+      data = await fetch(`/api/logs/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ title, action, date, tagId }),
+      });
+      res = await data.json();
+    } else {
+      data = await fetch(`/api/logs`, {
+        method: "POST",
+        body: JSON.stringify({ title, action, date, tagId }),
+      });
+      res = await data.json();
+    }
+    console.log(res);
+    // showToast("Log is successfully saved!", "success");
+    // clearFields();
+    // router.refresh();
+    // if (!res.ok) console.log(res.message);
   }
 
   const clearFields = () => {
+    setId("");
     setTitle("");
-    setAmpm("");
     setAction("");
-    setTime("");
-    setDate("");
+    setDate(new Date());
     setTagId("0");
   };
 
@@ -151,8 +175,8 @@ const Form = () => {
                   : ""
               }`}
               type="datetime-local"
-              onChange={(e) => setDate(e.target.value)}
-              value={date}
+              onChange={(e) => setDate(new Date(e.target.value))}
+              // value={new Date(date}
             />
             {formErrors.find((error) => error.field === "date") && (
               <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">

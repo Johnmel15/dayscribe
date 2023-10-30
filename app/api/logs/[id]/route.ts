@@ -32,7 +32,7 @@ export const GET = async (res: Request, { params }: Props) => {
 export const PATCH = async (res: Request, { params }: Props) => {
   try {
     const body = await res.json();
-    const { title, action, date } = body;
+    const { title, action, date, tagId } = body;
 
     const { id } = params;
     const updateLog = await prisma.dailyLogs.update({
@@ -43,6 +43,7 @@ export const PATCH = async (res: Request, { params }: Props) => {
         title: title,
         action: action,
         date: new Date(date),
+        tagId: tagId,
       },
     });
 

@@ -1,30 +1,20 @@
-"use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Display from "../Data";
 
-const List = () => {
-  const [logs, setLogs] = useState([]);
+async function getLogs() {
+  const res = await fetch(`${process.env.BASE_URL}/api/logs`, {
+    method: "GET",
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    console.log(res);
+  }
 
-  useEffect(() => {
-    const fetchLogs = async () => {
-      try {
-        const res = await fetch(`/api/logs`, {
-          method: "GET",
-          cache: "no-store",
-        });
-        if (!res.ok) {
-          throw new Error("Failed to fetch logs");
-        }
-        const data = await res.json();
-        setLogs(data);
-      } catch (error) {
-        console.error(error);
-        setLogs([]);
-      }
-    };
+  return res.json();
+}
 
-    fetchLogs();
-  }, [logs]);
+const List = async () => {
+  const logs = await getLogs();
 
   return (
     <div className="container mx-auto px-4">

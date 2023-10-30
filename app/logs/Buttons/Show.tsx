@@ -9,11 +9,15 @@ interface Props {
     title: string;
     action: string;
     date: Date;
+    Tag: {
+      id: string;
+      name: string;
+    };
   };
 }
 
 const Show: FC<Props> = (props) => {
-  const { title, action, date } = props.data;
+  const { title, action, date, Tag: tag } = props.data;
   const [isOpenShowModal, setIsOpenShowModal] = useState(false);
 
   const openModal = () => {
