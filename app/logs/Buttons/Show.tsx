@@ -52,7 +52,7 @@ const Show: FC<Props> = (props) => {
         </svg>
       </button>
       <Modal isOpen={isOpenShowModal} title={`${title}`} onClose={closeModal}>
-        <div className="mt-2">
+        <div className="mt-2 text-start">
           <p className="text-xs text-gray-500 italic">
             {moment(date).format("MMMM Do YYYY @ h:mm: A")}
           </p>

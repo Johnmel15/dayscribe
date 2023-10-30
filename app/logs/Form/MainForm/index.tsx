@@ -131,52 +131,52 @@ const Form = () => {
   };
 
   return (
-    <div className="flex justify-center w-5/12">
-      <div className="w-full max-w-md items-center ">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 border border-stone-400 "
-        >
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Title
-            </label>
-            <input
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                errors.title ? "border-red-500" : ""
-              }`}
-              type="text"
-              placeholder="Title"
-              {...register("title", { required: "This field is required" })}
-            />
-            {errors.title && (
-              <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                {errors.title.message as React.ReactNode}
-              </span>
-            )}
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Action
-            </label>
-            <textarea
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                errors.action ? "border-red-500" : ""
-              }`}
-              placeholder="Action"
-              {...register("action", { required: "This field is required" })}
-            ></textarea>
-            {errors.action && (
-              <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                {errors.action.message as React.ReactNode}
-              </span>
-            )}
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Date
-            </label>
-            <div style={{ width: "383px", margin: "auto" }}>
+    <div className="container mx-auto px-4 sm:px-6 lg:pr-4 lg:pl-0 w-full sm:w-3/4 md:w-3/4 lg:w-2/4 ">
+      <div className="flex justify-center sm:justify-start w-full">
+        <div className="w-full sm:max-w-md items-center">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 border border-stone-400"
+          >
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Title
+              </label>
+              <input
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  errors.title ? "border-red-500" : ""
+                }`}
+                type="text"
+                placeholder="Title"
+                {...register("title", { required: "This field is required" })}
+              />
+              {errors.title && (
+                <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                  {errors.title.message as React.ReactNode}
+                </span>
+              )}
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Action
+              </label>
+              <textarea
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  errors.action ? "border-red-500" : ""
+                }`}
+                placeholder="Action"
+                {...register("action", { required: "This field is required" })}
+              ></textarea>
+              {errors.action && (
+                <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                  {errors.action.message as React.ReactNode}
+                </span>
+              )}
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Date
+              </label>
               <DatePicker
                 wrapperClassName="w-full"
                 className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
@@ -193,42 +193,42 @@ const Form = () => {
                 timeFormat="h:mm aa"
                 dateFormat="MMMM d, yyyy h:mm aa"
               />
+
+              {errors.action && (
+                <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                  {errors.date?.message as React.ReactNode}
+                </span>
+              )}
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Tag As
+              </label>
+              <Tags tagsData={tagsData} register={register} errors={errors} />
+              {errors.tagId && (
+                <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                  {errors.tagId.message as React.ReactNode}
+                </span>
+              )}
             </div>
 
-            {errors.action && (
-              <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                {errors.date?.message as React.ReactNode}
-              </span>
-            )}
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Tag As
-            </label>
-            <Tags tagsData={tagsData} register={register} errors={errors} />
-            {errors.tagId && (
-              <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                {errors.tagId.message as React.ReactNode}
-              </span>
-            )}
-          </div>
-
-          <div className="flex items-end justify-end">
-            <button
-              className={`${isLoading} ? btn : bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
-              type="submit"
-              disabled={isLoading}
-            >
-              {isLoading && (
-                <>
-                  <span className="loading loading-spinner loading-sm"></span>
-                  &nbsp;
-                </>
-              )}
-              Submit
-            </button>
-          </div>
-        </form>
+            <div className="flex items-end justify-end">
+              <button
+                className={`${isLoading} ? btn : bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading && (
+                  <>
+                    <span className="loading loading-spinner loading-sm"></span>
+                    &nbsp;
+                  </>
+                )}
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

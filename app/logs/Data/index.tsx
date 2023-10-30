@@ -32,10 +32,11 @@ const Display: FC<Props> = (props) => {
   return (
     <>
       <div className="bg-white p-6 rounded-lg shadow-xl mb-4">
-        <div className="flex items-end justify-between h-7">
-          <div className="flex items-center">
-            <h2 className="mb-0 font-medium text-lg text-gray-600">{title}</h2>
-            &nbsp;
+        <div className="flex items-baseline sm:items-start md:items-start lg:items-center justify-between h-fit flex-col sm:flex-col md:flex-col lg:flex-row">
+          <div className="flex items-center sm:items-start md:items-start lg:items-center flex-row sm:flex-col md:flex-col lg:flex-row">
+            <h2 className="mb-0 font-medium text-lg text-gray-600 mr-2">
+              {title}
+            </h2>
             <div className={`badge badge-info badge-outline ${badgeColor}`}>
               {tag.name}
             </div>

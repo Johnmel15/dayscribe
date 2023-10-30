@@ -53,7 +53,7 @@ const Modal: React.FC<ModalProps> = ({
             >
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
-                  <div className="mt-3 text-center sm:mt-0 sm:text-left">
+                  <div className="mt-3 text-start sm:mt-0 sm:text-left">
                     <h3
                       className="text-lg leading-6 font-medium text-gray-900"
                       id="modal-headline"
@@ -64,7 +64,7 @@ const Modal: React.FC<ModalProps> = ({
                   </div>
                 </div>
               </div>
-              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row justify-end">
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 flex justify-end">
                 <button
                   type="button"
                   className="btn btn-error text-white"

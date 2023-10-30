@@ -46,7 +46,7 @@ const List = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto">
       {isLoading ? (
         <div className="text-center">
           <span className="loading loading-spinner loading-md"></span>
