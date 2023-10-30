@@ -1,4 +1,4 @@
-import prisma from "@/prisma/client";
+import prisma from "@/script";
 import { NextResponse } from "next/server";
 
 type logProps = {
