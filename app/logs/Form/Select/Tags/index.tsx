@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { FC } from "react";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 interface FormErrorProps {
   field: string;
@@ -13,29 +14,26 @@ interface Tag {
 
 interface Props {
   tagsData: Tag[];
-  tagId: string;
-  setTagId: (value: string) => void;
-  formErrors: FormErrorProps[];
+  errors: FieldErrors<FieldValues>;
+  register: UseFormRegister<{
+    title: string;
+    action: string;
+    date: Date | string;
+    tagId: string;
+  }>;
 }
 
-const Tags: FC<Props> = ({ tagsData, tagId, setTagId, formErrors }) => {
-  const handleTags = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
-    setTagId(value);
-  };
+const Tags: FC<Props> = ({ tagsData, errors, register }) => {
   return (
     <>
       {tagsData.length > 0 && (
         <select
           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-            formErrors.find((error) => error.field === "tagid")
-              ? "border-red-500"
-              : ""
+            errors.tagId ? "border-red-500" : ""
           }`}
-          onChange={(e) => handleTags(e)}
-          value={tagId}
+          {...register("tagId", { required: "This field is required" })}
         >
-          <option disabled value="0">
+          <option disabled value="">
             Select Tag
           </option>
           {tagsData.map((tag: Tag) => (

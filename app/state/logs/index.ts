@@ -5,8 +5,8 @@ export const useLogs = create<LogState>((set) => ({
   id: "",
   title: "",
   action: "",
-  date: new Date(),
-  tagId: "0",
+  date: "",
+  tagId: "",
   setId: (value: string) => {
     set(() => ({ id: value }));
   },
@@ -16,7 +16,7 @@ export const useLogs = create<LogState>((set) => ({
   setAction: (value: string) => {
     set(() => ({ action: value }));
   },
-  setDate: (value: Date) => {
+  setDate: (value: Date | string) => {
     set(() => ({ date: value }));
   },
   setTagId: (value: string) => {
