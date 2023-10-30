@@ -23,13 +23,6 @@ const Form = () => {
     setDate,
     setTagId,
   } = useLogs();
-
-  // const [title, setTitle] = useState<string>("");
-  // const [ampm, setAmpm] = useState<string>("");
-  // const [action, setAction] = useState<string>("");
-  // const [time, setTime] = useState<string>("");
-  // const [date, setDate] = useState<string>("");
-  // const [tagId, setTagId] = useState<string>("0");
   const [tagsData, setTagsData] = useState([]);
   const [formErrors, setFormErrors] = useState<FormErrorProps[]>([]);
 
@@ -101,12 +94,21 @@ const Form = () => {
       });
       res = await data.json();
     }
-    console.log(res);
-    // showToast("Log is successfully saved!", "success");
-    // clearFields();
-    // router.refresh();
-    // if (!res.ok) console.log(res.message);
+    console.log(data);
+    if (data.status === 200) {
+      showToast("Log is successfully saved!", "success");
+      clearFields();
+      await handleAddData();
+      router.refresh();
+    } else {
+      console.log(res.message);
+    }
   }
+
+  const handleAddData = async () => {
+    const event = new Event("dataAdded");
+    window.dispatchEvent(event);
+  };
 
   const clearFields = () => {
     setId("");

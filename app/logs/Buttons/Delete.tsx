@@ -38,7 +38,13 @@ const Delete: FC<Props> = (props) => {
         router.refresh();
         showToast("Log is successfully deleted!", "success");
         setIsModalOpen(false);
+        handleDeleteData();
       });
+  };
+
+  const handleDeleteData = async () => {
+    const event = new Event("dataDeleted");
+    window.dispatchEvent(event);
   };
 
   return (
