@@ -32,10 +32,6 @@ const Form = () => {
   const [tagsData, setTagsData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const customStyles = {
-    width: "300px",
-  };
-
   const {
     register,
     handleSubmit,
