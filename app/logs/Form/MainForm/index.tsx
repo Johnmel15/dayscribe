@@ -7,6 +7,7 @@ import { useLogs } from "@/app/state/logs";
 import { useForm } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+import axios, { AxiosResponse } from "axios";
 
 interface LogFormArgs {
   title: string;
@@ -17,6 +18,11 @@ interface LogFormArgs {
 
 interface UserProps {
   data: any;
+}
+
+interface Tag {
+  id: string;
+  name: string;
 }
 
 const Form: FC<UserProps> = (props) => {
@@ -33,7 +39,7 @@ const Form: FC<UserProps> = (props) => {
     setTagId,
   } = useLogs();
   const { data: userInfo } = props;
-  const [tagsData, setTagsData] = useState([]);
+  const [tagsData, setTagsData] = useState<Tag[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -53,13 +59,16 @@ const Form: FC<UserProps> = (props) => {
 
   useEffect(() => {
     const fetchTagsData = async () => {
-      try {
-        const response = await fetch("/api/tags");
-        const data = await response.json();
-        setTagsData(data);
-      } catch (error) {
-        console.error("Error fetching tags data:", error);
-      }
+      axios
+        .get(`/api/tags`)
+        .then((res) => {
+          console.log(res);
+          const data = res.data;
+          setTagsData(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
     fetchTagsData();
   }, []);
