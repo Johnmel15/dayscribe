@@ -20,7 +20,11 @@ export async function getCurrentUser() {
         email: session?.user?.email,
       },
       include: {
-        DailyLogs: true,
+        DailyLogs: {
+          include: {
+            Tag: true,
+          },
+        },
       },
     });
 

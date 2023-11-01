@@ -8,7 +8,7 @@ const initializeToastr = () => {
   if (typeof window !== "undefined") {
     const toastr = require("toastr");
     toastr.options = {
-      positionClass: "toast-top-right",
+      positionClass: "toast-top-center",
       hideDuration: 300,
       timeOut: 2000,
       closeButton: true,

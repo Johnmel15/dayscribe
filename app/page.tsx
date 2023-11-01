@@ -1,11 +1,8 @@
 import React from "react";
+import Home from "./home";
+import { getCurrentUser } from "@/actions/getCurrentUser";
 
-const Home = () => {
-  return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      Home
-    </div>
-  );
-};
-
-export default Home;
+export default async function index() {
+  const currentUser = await getCurrentUser();
+  return <Home currentUser={currentUser} />;
+}

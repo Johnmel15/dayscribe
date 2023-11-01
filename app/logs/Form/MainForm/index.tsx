@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ToastrComponent from "@/app/components/toastr";
 import Tags from "../Select/Tags";
@@ -15,7 +15,11 @@ interface LogFormArgs {
   tagId: string;
 }
 
-const Form = () => {
+interface UserProps {
+  data: any;
+}
+
+const Form: FC<UserProps> = (props) => {
   const {
     id,
     title,
@@ -28,7 +32,7 @@ const Form = () => {
     setDate,
     setTagId,
   } = useLogs();
-
+  const { data: userInfo } = props;
   const [tagsData, setTagsData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -75,27 +79,29 @@ const Form = () => {
 
   async function onSubmit(form: any) {
     setIsLoading(true);
-    let data: any = {};
+    const data = { ...form, userId: userInfo.id };
+    console.log(data);
+    let logs: any = {};
     let res: any = {};
     if (id) {
-      data = await fetch(`/api/logs/${id}`, {
+      logs = await fetch(`/api/logs/${id}`, {
         method: "PATCH",
-        body: JSON.stringify(form),
+        body: JSON.stringify(data),
       }).finally(() => {
         setIsLoading(false);
       });
-      res = await data.json();
+      res = await logs.json();
     } else {
-      data = await fetch(`/api/logs`, {
+      logs = await fetch(`/api/logs`, {
         method: "POST",
-        body: JSON.stringify(form),
+        body: JSON.stringify(data),
       }).finally(() => {
         setIsLoading(false);
       });
-      res = await data.json();
+      res = await logs.json();
     }
 
-    if (data.status === 200) {
+    if (logs.status === 200) {
       showToast("Log is successfully saved!", "success");
       clearFields();
       await handleAddData();

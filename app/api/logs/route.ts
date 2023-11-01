@@ -6,12 +6,13 @@ type logProps = {
   action: string;
   date: string;
   tagId: string;
+  userId: string;
 };
 
 export async function POST(request: Request) {
   try {
     const body: logProps = await request.json();
-    const { title, action, date, tagId } = body;
+    const { title, action, date, tagId, userId } = body;
 
     if (!title || !action || !date) {
       return new NextResponse(
@@ -26,6 +27,7 @@ export async function POST(request: Request) {
         action: action,
         date: new Date(date),
         tagId: tagId,
+        userId: userId,
       },
     });
     return new NextResponse(JSON.stringify(data), {
